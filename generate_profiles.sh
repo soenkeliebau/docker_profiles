@@ -10,7 +10,7 @@ for template in /documents/templates/*.j2; do
     for profile in /documents/input/*.json; do
         filename=$(basename "$profile")
         filename="${filename%.*}"
-        python /usr/local/bin/main.py -t $template -i $profile -o /documents/build/
+        python /usr/local/bin/main.py -t $template -i $profile -o /documents/build/pdf/
     done
 done
 for adocfile in /documents/build/*.adoc; do
