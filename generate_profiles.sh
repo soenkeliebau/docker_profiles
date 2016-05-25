@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 # TODO: Create build environment
+rm -rf /documents/build
+mkdir -p /documents/build/pdf
+cp -r /documents/resources /documents/build/
 
 for template in /documents/templates/*.j2; do
     for profile in /documents/input/*.json; do
