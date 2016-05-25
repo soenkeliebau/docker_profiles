@@ -3,6 +3,7 @@
 import json, os, getopt, sys
 from jinja2 import Environment, FileSystemLoader
 
+
 def main(argv):
     inputfile = ''
     outputfile = ''
@@ -34,8 +35,8 @@ def main(argv):
 
     with open(inputfile) as json_file:
         data = json.load(json_file)
+    outputfile = outputfile + "OpenCore_" + data["personal_data"]["first_name"] + "_" + data["personal_data"]["last_name"] + "_" + os.path.splitext(templatefile)[0] + ".adoc"
 
-    #PATH = os.path.dirname(os.path.abspath(__file__))
     PATH = os.path.dirname('/documents/templates/')
     TEMPLATE_ENVIRONMENT = Environment(
         autoescape=False,
@@ -46,6 +47,7 @@ def main(argv):
         'data': data
     }
 
+    print outputfile
     with open(outputfile, 'w') as f:
         html = TEMPLATE_ENVIRONMENT.get_template(templatefile).render(context)
         f.write(html)
