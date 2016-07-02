@@ -13,9 +13,10 @@ for template in /documents/templates/*.j2; do
         python /usr/local/bin/main.py -t $template -i $profile -o /documents/build/
     done
 done
-for adocfile in /documents/build/*.adoc; do
-    filename=$(basename "$adocfile")
+for texfile in /documents/build/*.tex; do
+    filename=$(basename "$texfile")
     filename="${filename%.*}"
     pdffile="/documents/build/pdf/${filename}.pdf"
-    asciidoctor -r asciidoctor-pdf -b pdf $adocfile -o $pdffile
+    cd /documents/build && xelatex $texfile
+    cd /documents/build && xelatex $texfile
 done

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-import json, os, getopt, sys
+import json, os, getopt, sys, codecs
+
 from jinja2 import Environment, FileSystemLoader
 
 
@@ -35,20 +36,26 @@ def main(argv):
 
     with open(inputfile) as json_file:
         data = json.load(json_file)
-    outputfile = outputfile + "OpenCore_" + data["personal_data"]["first_name"] + "_" + data["personal_data"]["last_name"] + "_" + os.path.splitext(templatefile)[0] + ".adoc"
+    outputfile = outputfile + "OpenCore_" + data["personal_data"]["first_name"] + "_" + data["personal_data"]["last_name"] + "_" + os.path.splitext(templatefile)[0] + ".tex"
 
     PATH = os.path.dirname('/documents/templates/')
     TEMPLATE_ENVIRONMENT = Environment(
         autoescape=False,
         loader=FileSystemLoader(os.path.join(PATH, '')),
-        trim_blocks=False)
+        trim_blocks=False,
+        block_start_string = '((*',
+        block_end_string = '*))',
+        variable_start_string = '(((',
+        variable_end_string = ')))',
+        comment_start_string = '((=',
+        comment_end_string = '=))')
 
     context = {
         'data': data
     }
 
     print outputfile
-    with open(outputfile, 'w') as f:
+    with codecs.open(outputfile, 'w', 'utf-8') as f:
         html = TEMPLATE_ENVIRONMENT.get_template(templatefile).render(context)
         f.write(html)
 
