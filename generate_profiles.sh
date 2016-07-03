@@ -20,3 +20,6 @@ for texfile in /documents/build/*.tex; do
     cd /documents/build && xelatex $texfile
     cd /documents/build && xelatex $texfile
 done
+for outputfile in /documents/build/*.pdf; do
+    mv $outputfile /documents/build/pdf/
+done
