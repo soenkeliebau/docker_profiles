@@ -36,7 +36,10 @@ def main(argv):
 
     with open(inputfile) as json_file:
         data = json.load(json_file)
-    outputfile = outputfile + "OpenCore_" + data["personal_data"]["first_name"] + "_" + data["personal_data"]["last_name"] + "_" + os.path.splitext(templatefile)[0] + ".tex"
+
+    filename = u'_'.join((data["personal_data"]["first_name"],data["personal_data"]["last_name"])).encode("ascii","ignore")
+
+    outputfile = outputfile + "OpenCore_" + filename + "_" + os.path.splitext(templatefile)[0] + ".tex"
 
     PATH = os.path.dirname('/documents/templates/')
     TEMPLATE_ENVIRONMENT = Environment(
