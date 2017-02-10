@@ -39,7 +39,7 @@ def main(argv):
             currentFile = 'config file(' + configFile + ')'
             print 'Reading ' + currentFile
             configData = json.load(configJson)
-        except ValueError, e:
+        except Exception, e:
             print "Invalid json in " +  currentFile + " - aborting!"
             return
     # TODO: add schema validation
@@ -112,8 +112,9 @@ def processFile(inputFile, template):
     with open(baseDirectory + inputFile['inputfile']) as inputJson:
         try:
             inputData = json.load(inputJson)
-        except ValueError, e:
+        except Exception, e:
             print 'Error loading input file ' + inputFile + ' skipping ..'
+            print 'Failed!! \n\n\n'
             return
 
     context = {
@@ -140,9 +141,14 @@ def processFile(inputFile, template):
     intermediateFile = getIntermediateFile(inputFile, template)
 
     print 'Applying input to template -> ' + intermediateFile
-    with codecs.open(intermediateFile, 'w', 'utf-8') as f:
-        html = TEMPLATE_ENVIRONMENT.get_template(templateFile).render(context)
-        f.write(html)
+    try:
+        with codecs.open(intermediateFile, 'w', 'utf-8') as f:
+            html = TEMPLATE_ENVIRONMENT.get_template(templateFile).render(context)
+            f.write(html)
+    except Exception, e:
+        print 'Error applying input data to template:' + str(e)
+        print 'Failed!! \n\n\n'
+        return
 
     # At this point we have generated the intermediate file for this combination of inputfile & template
     # next run the post processing script (if any) and move resulting files to output directory
