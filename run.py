@@ -16,7 +16,7 @@ DEFAULTOUTPUTDIRSUFFIX = 'output/'
 DEFAULTCONFIGFILE = 'config/inputfiles.json'
 DEFAULTTEMPLATEFILE = 'config/templates.json'
 
-baseDirectory = '/home/sliebau/coden/docker_profiles/'
+baseDirectory = '/documents/'
 workingDirectory = ''
 outputDirectory = ''
 templateFile = '' # defines all available templates
