@@ -4,7 +4,7 @@ import json, os, getopt, sys, codecs
 
 from jinja2 import Environment, FileSystemLoader
 from subprocess import call
-from shutil import copyfile, copytree
+from shutil import copyfile, copytree, rmtree
 
 # Define locations of fixed input files - all other files need to be referenced in these files
 # to be picked up
@@ -16,7 +16,7 @@ DEFAULTOUTPUTDIRSUFFIX = 'output/'
 DEFAULTCONFIGFILE = 'config/inputfiles.json'
 DEFAULTTEMPLATEFILE = 'config/templates.json'
 
-baseDirectory = '/documents/'
+baseDirectory = '/home/sliebau/coden/docker_profiles/'
 workingDirectory = ''
 outputDirectory = ''
 templateFile = '' # defines all available templates
@@ -216,9 +216,11 @@ def createDir(directoryName):
     # TODO: add check for trailing /
     print 'Checking for ' + directoryName
     directory = os.path.dirname(directoryName)
-    if not os.path.exists(directory):
-        print 'Creating ' + directoryName
-        os.makedirs(directory)
+    if os.path.exists(directory):
+        rmtree(directory)
+
+    print 'Creating ' + directoryName
+    os.makedirs(directory)
 
 
 if __name__ == "__main__":
