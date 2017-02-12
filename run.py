@@ -186,8 +186,8 @@ def processFile(inputFile, template):
 
 # Preparation method that copies all necessary files into the working directory
 def setupBuildEnv():
-    createDir(workingDirectory)
-    createDir(outputDirectory)
+    deleteThenCreateDir(workingDirectory)
+    deleteThenCreateDir(outputDirectory)
 
 
 def getIntermediateFile(input, template):
@@ -216,12 +216,20 @@ def createDir(directoryName):
     # TODO: add check for trailing /
     print 'Checking for ' + directoryName
     directory = os.path.dirname(directoryName)
+    if not os.path.exists(directory):
+        print 'Creating ' + directoryName
+        os.makedirs(directory)
+
+
+def deleteThenCreateDir(directoryName):
+    # TODO: add check for trailing /
+    print 'Checking for ' + directoryName
+    directory = os.path.dirname(directoryName)
     if os.path.exists(directory):
         rmtree(directory)
 
     print 'Creating ' + directoryName
     os.makedirs(directory)
-
 
 if __name__ == "__main__":
     main(sys.argv[1:])
