@@ -12,4 +12,4 @@ COPY font/* /usr/share/fonts/truetype/helvetica/
 
 WORKDIR /documents
 VOLUME ["/documents"]
-ENTRYPOINT /usr/local/bin/run.py
+CMD /usr/local/bin/run.py
