@@ -205,11 +205,15 @@ def getOutputFile(input, template):
         return workingDirectory + template['name'] + '/' + input['outputfile'] + '_' + template['name'] + '.' + template['intermediate_extension']
 
 def getFinalFile(input, template):
+    if 'prefix' in template:
+        prefix = template['prefix']
+    else:
+        prefix = ''
     global outputDirectory
     if 'post_processing' in template:
-        return outputDirectory + template['name'] + '/' + input['outputfile'] + '_' + template['name'] + '.' + template['post_processing']['final_extension']
+        return outputDirectory + template['name'] + '/' + prefix + input['outputfile'] + '_' + template['name'] + '.' + template['post_processing']['final_extension']
     else:
-        return outputDirectory + template['name'] + '/' + input['outputfile'] + '_' + template['name'] + '.' + template['intermediate_extension']
+        return outputDirectory + template['name'] + '/' + prefix + input['outputfile'] + '_' + template['name'] + '.' + template['intermediate_extension']
 
 
 def createDir(directoryName):
